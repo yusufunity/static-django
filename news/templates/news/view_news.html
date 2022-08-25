@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ news_item.title }} :: {{ block.super }}
+{% endblock %}
+
+
+{% block sidebar%}
+
+	{% include 'news/list_categories.html' %}
+
+	{% comment %}
+	<div class="list-group">
+		{% for item in categories %}
+		
+		<a href="{% url 'category' item.pk %}" class="list-group-item list-group-item-action ">{{ item.title }}</a>
+		
+		{% endfor %}
+	
+	</div>
+	{% endcomment %}
+
+{% endblock %}
+
+{% block content %}
+
+
+				
+				
+				
+<div class="card mb-3">
+		<div class="card-header">
+				{% comment %}
+			Kategoriya: <a href="{% url 'category' item.category.pk  %}">{{ item.category }}</a>
+				
+				{% endcomment %}
+
+				Kategoriya: <a href="{{news_item.category.get_absolute_url }}">{{ news_item.category }}</a>
+		</div>
+	    <div class="card-body">
+	    	<div class="media">
+	    		{% if news_item.photo %}
+	    			<img src="{{ news_item.photo.url }}" alt="" width="350" class="mr-3">
+	    		{% endif %}
+	    		<div class="media-body">
+	    			
+    			<h5 class="card-title {% cycle 'text-danger' 'text-success' %}">{{ news_item.title }}</h5>
+    			{% comment %} linebreaks orsaini oshadi| safe esa html taglarni oddiy sozga aylantiradi {% endcomment %}
+    			<p class="card-text">{{ news_item.content|safe|linebreaks}}</p>
+    			{% comment %}
+    			<!-- <a href="#" class="btn btn-primary">Read more...</a> -->
+	    		{% endcomment %}
+	    		</div>
+	    		
+	    	</div>
+	    </div>
+   <div class="card-footer text-muted">
+       {{news_item.create_at|date:"Y-m-d H:m "}}
+    </div>
+</div>
+
+				
+			
+
+{% endblock %}
+		
+
+
